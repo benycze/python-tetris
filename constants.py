@@ -21,8 +21,9 @@
 from pygame.locals import *
 
 # Width of the box
-BWIDTH   = 20
-BHEIGHT  = 20
+BWIDTH     = 20
+BHEIGHT    = 20
+MESH_WIDTH = 1
 
 # Board configuration
 BOARD_HEIGHT     = 7
@@ -38,6 +39,7 @@ ORANGE   = (255,69,0)
 GOLD     = (255,125,0)
 PURPLE   = (128,0,128)
 CYAN     = (0,255,255) 
+BLACK    = (0,0,0)
 
 # Timing constraints
 MOVE_TICK          = 1000

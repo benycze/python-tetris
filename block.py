@@ -57,7 +57,8 @@ class Block(object):
         Draw the block
         """
         for bl in self.shape:
-            pygame.draw.rect(self.screen,self.color,bl,5)
+            pygame.draw.rect(self.screen,self.color,bl)
+            pygame.draw.rect(self.screen,constants.BLACK,bl,constants.MESH_WIDTH)
         
     def get_rotated(self,x,y):
         """

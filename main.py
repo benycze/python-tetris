@@ -270,7 +270,7 @@ class Tetris(object):
         """
         Draw the whole scene
         """
-        self.screen.fill((0,0,0))
+        self.screen.fill(constants.BLACK)
         self.draw_board()
         # Draw all elements in the board
         for blk in self.blk_list:
