@@ -23,6 +23,11 @@ The following list contains used control keys:
 
 * **Pavel Benáček** - *coding of the game*
 
+## TODO 
+
+* Counting of score
+* Speed-up the game when the score is rising
+
 ## License
 
 This project is licensed under the GNU GPL License - see the [LICENSE.md](LICENSE.md) file for details
