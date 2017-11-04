@@ -63,6 +63,8 @@ class Tetris(object):
         # we have to decrese the number of blocks in line by one when the number is odd (because of margin)
         self.blocks_in_line = bx if bx%2 == 0 else bx-1
         self.blocks_in_pile = by
+        # Score settings
+        self.score = 0
 
     def apply_action(self):
         """
@@ -96,6 +98,8 @@ class Tetris(object):
         """
         # Compute the offset of the longest string
         self.print_center(["PAUSE","Press \"p\" to continue"])
+        # Draw the string
+        pygame.display.flip()
         while True:
             for ev in pygame.event.get():
                 if ev.type == pygame.KEYDOWN and ev.key == pygame.K_p:
@@ -114,6 +118,8 @@ class Tetris(object):
         self.done = False
         self.game_over = False
         self.new_block = True
+        # Print the score
+        self.print_score()
         while not(self.done) and not(self.game_over):
             # Get the block and run the game logic
             self.get_block()
@@ -127,12 +133,21 @@ class Tetris(object):
         pygame.font.quit()
         pygame.display.quit()        
    
+    def print_score(self):
+        """
+        Print the current score
+        """
+        string = ["SCORE: {0}".format(self.score)]
+        self.print_text(string,constants.POINT_MARGIN,constants.POINT_MARGIN)        
+
     def print_game_over(self):
         """
         Print the game over string
         """
         # Print the game over text
         self.print_center(["Game Over","Press \"q\" to exit"])
+        # Draw the string
+        pygame.display.flip()
         # Wait untill the space is pressed
         while True: 
             for ev in pygame.event.get():
@@ -150,7 +165,6 @@ class Tetris(object):
             txt_surf = self.myfont.render(string,False,(255,255,255))
             self.screen.blit(txt_surf,(x,y+prev_y))
             prev_y += size_y 
-        pygame.display.flip()
 
     def print_center(self,str_list):
         """
@@ -204,7 +218,7 @@ class Tetris(object):
             # Request new block
             self.new_block = True
             # Detect the filled block and possibly modify the screen
-            self.detect_line()            
+            self.detect_line()   
  
     def detect_line(self):
         """
@@ -222,7 +236,8 @@ class Tetris(object):
                 continue 
             # Ok, line is detected!     
             self.remove_line(tmp_y)
-            # TODO: Implement counting of the score 
+            # Count new score
+            self.score += self.blocks_in_line * constants.POINT_VALUE 
 
     def remove_line(self,y):
         """
@@ -253,6 +268,8 @@ class Tetris(object):
         pygame.draw.rect(self.screen,constants.WHITE,self.board_down)
         pygame.draw.rect(self.screen,constants.WHITE,self.board_left)
         pygame.draw.rect(self.screen,constants.WHITE,self.board_right)
+        # Update the score         
+        self.print_score()
 
     def get_block(self):
         """

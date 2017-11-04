@@ -27,7 +27,7 @@ MESH_WIDTH = 1
 
 # Board configuration
 BOARD_HEIGHT     = 7
-BOARD_UP_MARGIN  = 35
+BOARD_UP_MARGIN  = 40
 BOARD_MARGIN     = 2
 
 # Colors
@@ -45,5 +45,9 @@ BLACK    = (0,0,0)
 MOVE_TICK          = 1000
 TIMER_MOVE_EVENT   = USEREVENT+1
 
+# Configuration of points
+POINT_VALUE       = 100
+POINT_MARGIN      = 10
+
 # Font configuration
-FONT_SIZE  = 40
+FONT_SIZE           = 25
