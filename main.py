@@ -59,8 +59,9 @@ class Tetris(object):
             ([[0,0],[1,0],[2,0],[1,1]],constants.PURPLE),
             ([[0,0],[0,1],[1,1],[2,1]],constants.CYAN)
         )
-        # Compute the nuber of blocks in line minus the margin
-        self.blocks_in_line = bx
+        # Compute the number of blocks. When the number of blocks is even, we can use it directly but 
+        # we have to decrese the number of blocks in line by one when the number is odd (because of margin)
+        self.blocks_in_line = bx if bx%2 == 0 else bx-1
         self.blocks_in_pile = by
 
     def apply_action(self):
