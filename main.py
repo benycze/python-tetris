@@ -194,7 +194,6 @@ class Tetris(object):
         for shape_block in self.active_block.shape:
             tmp_y = shape_block.y
             tmp_cnt = self.get_blocks_in_line(tmp_y)
-            print(tmp_cnt,self.blocks_in_line)
             # Detect if the line contains the given number of blocks
             if tmp_cnt != self.blocks_in_line:
                 continue 
