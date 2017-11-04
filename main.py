@@ -110,21 +110,22 @@ class Tetris(object):
         self.apply_action()
         # Border logic, check if we colide with down border or any
         # other borders. Also detect if we can move down
-        down_boarder = self.active_block.check_collision([self.board_down])
-        any_border   = self.active_block.check_collision([self.board_left,self.board_up,self.board_right])
+        down_board  = self.active_block.check_collision([self.board_down])
+        any_border  = self.active_block.check_collision([self.board_left,self.board_up,self.board_right])
         block_any   = self.block_colides()
         # Restore the configuration if any collision was detected
         # Also, generate new block if down collision was detected.
-        if down_boarder or any_border or block_any:
+        if down_board or any_border or block_any:
             self.active_block.restore()
         # So far so good, sample the previous state and try to move down. After that, detect
-        # the the insertion of new block
+        # the the insertion of new block. The block new block is inserted if we reached the boarder
+        # or we cannot move down.
         self.active_block.backup()
         self.active_block.move(0,constants.BHEIGHT)
         can_move_down = not self.block_colides()  
         self.active_block.restore()
-
-        if down_boarder or not can_move_down:
+   
+        if down_board or not can_move_down:
             self.new_block = True
 
     def draw_board(self):
