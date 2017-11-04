@@ -27,6 +27,7 @@ BHEIGHT  = 20
 # Board configuration
 BOARD_HEIGHT     = 7
 BOARD_UP_MARGIN  = 35
+BOARD_MARGIN     = 2
 
 # Colors
 WHITE    = (255,255,255)

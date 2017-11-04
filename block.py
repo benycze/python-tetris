@@ -74,11 +74,35 @@ class Block(object):
 
     def move(self,x,y):
         """
-        Move the center of the block to the X,Y 
+        Move all elements of the block in given obsets  
         """       
         self.diffx += x
         self.diffy += y  
         self._update()
+
+    def remove_blocks(self,y):
+        """
+        Remove blocks on the Y coordinates. All blocks
+        above are moved one step down.
+        """
+        new_shape = []
+        for shape_i in range(len(self.shape)):
+            tmp_shape = self.shape[shape_i]
+            if tmp_shape.y < y:
+                # Block is above the y, move down and add to the lit
+                new_shape.append(tmp_shape)  
+                tmp_shape.move_ip(0,constants.BHEIGHT)
+            elif tmp_shape.y > y:
+                # Block is below the y, add it to the list. And don't move the block 
+                new_shape.append(tmp_shape)
+        # Setupt the new shape if you have some elements in the shape. Remove it if not.
+        self.shape = new_shape
+
+    def has_blocks(self):
+        """
+        Returns true if some blocks in the shape remains
+        """    
+        return True if len(self.shape) > 0 else False
 
     def rotate(self):
         """

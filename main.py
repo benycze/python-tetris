@@ -30,25 +30,25 @@ class Tetris(object):
     The class with the tetris game.
     """
 
-    def __init__(self,rx,ry):
+    def __init__(self,bx,by):
         """
         Parameters:
-            - rx - resolution x
-            - ry - resolution y
+            - bx - number of blocks in x
+            - by - number of blocks in y
         """
         # Remember the resolution
-        self.resx = rx
-        self.resy = ry
+        self.resx = bx*constants.BWIDTH+2*constants.BOARD_HEIGHT+constants.BOARD_MARGIN
+        self.resy = by*constants.BHEIGHT+2*constants.BOARD_HEIGHT+constants.BOARD_MARGIN
         # Boards to draw
-        self.board_up    = pygame.Rect(0,constants.BOARD_UP_MARGIN,rx,constants.BOARD_HEIGHT)
-        self.board_down  = pygame.Rect(0,ry-constants.BOARD_HEIGHT,rx,constants.BOARD_HEIGHT)
-        self.board_left  = pygame.Rect(0,constants.BOARD_UP_MARGIN,constants.BOARD_HEIGHT,ry)
-        self.board_right = pygame.Rect(rx-constants.BOARD_HEIGHT,constants.BOARD_UP_MARGIN,constants.BOARD_HEIGHT,ry)
+        self.board_up    = pygame.Rect(0,constants.BOARD_UP_MARGIN,self.resx,constants.BOARD_HEIGHT)
+        self.board_down  = pygame.Rect(0,self.resy-constants.BOARD_HEIGHT,self.resx,constants.BOARD_HEIGHT)
+        self.board_left  = pygame.Rect(0,constants.BOARD_UP_MARGIN,constants.BOARD_HEIGHT,self.resy)
+        self.board_right = pygame.Rect(self.resx-constants.BOARD_HEIGHT,constants.BOARD_UP_MARGIN,constants.BOARD_HEIGHT,self.resy)
         # List of used blocks
         self.blk_list    = []
         # Compute start indexes
-        self.start_x = math.ceil(rx/2.0)
-        self.start_y = constants.BOARD_UP_MARGIN + constants.BOARD_HEIGHT + 5
+        self.start_x = math.ceil(self.resx/2.0)
+        self.start_y = constants.BOARD_UP_MARGIN + constants.BOARD_HEIGHT + constants.BOARD_MARGIN
         # Prepare blocks 
         self.block_data = (
             ([[0,0],[1,0],[2,0],[3,0]],constants.RED),
@@ -59,6 +59,9 @@ class Tetris(object):
             ([[0,0],[1,0],[2,0],[1,1]],constants.PURPLE),
             ([[0,0],[0,1],[1,1],[2,1]],constants.CYAN)
         )
+        # Compute the nuber of blocks in line minus the margin
+        self.blocks_in_line = bx
+        self.blocks_in_pile = by
 
     def apply_action(self):
         """
@@ -169,14 +172,55 @@ class Tetris(object):
         self.active_block.move(0,constants.BHEIGHT)
         can_move_down = not self.block_colides()  
         self.active_block.restore()
-        
         # If we are on the respawn and we cannot move --> bang!
         if not can_move_down and (self.start_x == self.active_block.x and self.start_y == self.active_block.y):
             self.game_over = True
-        
         # Detect if can insert new block 
-        if down_board or not can_move_down:
+        if down_board or not can_move_down:     
+            # Request new block
             self.new_block = True
+            # Detect the filled block and possibly modify the screen
+            self.detect_line()            
+ 
+    def detect_line(self):
+        """
+        Detect if the line is filled. If yes, remove the line and
+        move with remaining bulding blocks.
+        """
+        # Get each block of the non-moving tetris block and try
+        # to detect the filled line. The number of bulding blocks is detected during
+        # the init function.
+        for shape_block in self.active_block.shape:
+            tmp_y = shape_block.y
+            tmp_cnt = self.get_blocks_in_line(tmp_y)
+            print(tmp_cnt,self.blocks_in_line)
+            # Detect if the line contains the given number of blocks
+            if tmp_cnt != self.blocks_in_line:
+                continue 
+            # Ok, line is detected!     
+            self.remove_line(tmp_y)
+            # TODO: Implement counting of the score 
+
+    def remove_line(self,y):
+        """
+        Detect the line with given Y coordinates. The rest of blocks
+        (yi > y) is moved one level done.
+        """ 
+        # Iterate over all blocks and remove not needed indicies
+        for block in self.blk_list:
+            block.remove_blocks(y)
+        # Setup new block list
+        self.blk_list = [blk for blk in self.blk_list if blk.has_blocks()]
+
+    def get_blocks_in_line(self,y):
+        """
+        Get the number of blocks in the line y.
+        """
+        tmp_cnt = 0
+        for block in self.blk_list:
+            for shape_block in block.shape:
+                tmp_cnt += (1 if y == shape_block.y else 0)            
+        return tmp_cnt
 
     def draw_board(self):
         """
@@ -212,4 +256,4 @@ class Tetris(object):
         pygame.display.flip()
 
 if __name__ == "__main__":
-    Tetris(450,600).run()
+    Tetris(16,30).run()
