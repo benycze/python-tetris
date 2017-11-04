@@ -83,11 +83,24 @@ class Tetris(object):
                     self.active_block.move(constants.BWIDTH,0)
                 if ev.key == pygame.K_SPACE:
                     self.active_block.rotate()
+                if ev.key == pygame.K_p:
+                    self.pause()
        
             # Detect if movement is detected
             if ev.type == constants.TIMER_MOVE_EVENT:
                 self.active_block.move(0,constants.BHEIGHT)
        
+    def pause(self):
+        """
+        Pause the game.
+        """
+        # Compute the offset of the longest string
+        self.print_center(["PAUSE","Press \"p\" to continue"])
+        while True:
+            for ev in pygame.event.get():
+                if ev.type == pygame.KEYDOWN and ev.key == pygame.K_p:
+                    return
+        
     def run(self):
         # Initialize the game
         pygame.init()
