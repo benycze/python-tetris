@@ -119,22 +119,32 @@ class Tetris(object):
         Print the game over string
         """
         # Print the game over text
-        string = "Game Over"
-        size_x,size_y = self.myfont.size(string)
-        txt_surf = self.myfont.render(string,False,(255,255,255))
-        self.screen.blit(txt_surf,(self.resx/2-size_x/2,self.resy/2))
-
-        string = "Press q to continue"
-        nsize_x,nsize_y = self.myfont.size(string)
-        txt_surf = self.myfont.render(string,False,(255,255,255))
-        self.screen.blit(txt_surf,(self.resx/2-nsize_x/2,self.resy/2+5+size_y))
-        pygame.display.flip()
-
+        self.print_center(["Game Over","Press \"q\" to exit"])
         # Wait untill the space is pressed
         while True: 
             for ev in pygame.event.get():
                 if ev.type == pygame.QUIT or (ev.type == pygame.KEYDOWN and ev.unicode == 'q'):
                     return
+
+    def print_text(self,str_lst,x,y):
+        """
+        Print the text on the X,Y indicies. Each new string will
+        be printed on new line.
+        """
+        prev_y = 0
+        for string in str_lst:
+            size_x,size_y = self.myfont.size(string)
+            txt_surf = self.myfont.render(string,False,(255,255,255))
+            self.screen.blit(txt_surf,(x,y+prev_y))
+            prev_y += size_y 
+        pygame.display.flip()
+
+    def print_center(self,str_list):
+        """
+        Print the string in the center of the screen.
+        """
+        max_xsize = max([tmp[0] for tmp in map(self.myfont.size,str_list)])
+        self.print_text(str_list,self.resx/2-max_xsize/2,self.resy/2)
 
     def block_colides(self):
         """
