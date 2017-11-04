@@ -10,6 +10,15 @@ The game is based on the pygame library. You can install it using the pip tool.
 pip install pygame
 ```
 
+## Control
+
+The following list contains used control keys:
+
+* *Arrows* - used for the moving of a tetris block
+* *Space*  - rotates the tetris block
+* *q*      - quit the game
+* *p*      - pause the game
+
 ## Authors
 
 * **Pavel Benáček** - *coding of the game*
