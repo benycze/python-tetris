@@ -4,10 +4,10 @@ This is the repository with non-finished implementation of the tetris. Please, b
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+The game is based on the pygame library. You can install it using the pip tool.
 
 ```
-Give examples
+pip install pygame
 ```
 
 ## Authors
