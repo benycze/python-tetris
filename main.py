@@ -87,22 +87,51 @@ class Tetris(object):
     def run(self):
         # Initialize the game
         pygame.init()
+        pygame.font.init()
+        self.myfont = pygame.font.SysFont(pygame.font.get_default_font(),constants.FONT_SIZE)
         self.screen = pygame.display.set_mode((self.resx,self.resy))
         pygame.display.set_caption("Tetris")
         # Setup the time to move every few milisencos
         pygame.time.set_timer(constants.TIMER_MOVE_EVENT,constants.MOVE_TICK)
         # The main game loop
         self.done = False
+        self.game_over = False
         self.new_block = True
-        while not(self.done):
+        while not(self.done) and not(self.game_over):
             # Get the block and run the game logic
             self.get_block()
             self.game_logic()
             # Move the block down and update the screen
             self.draw_game()
+        # Display the game_over and wait for a keypress
+        if self.game_over:
+            self.print_game_over()
         # Disable the screen
+        pygame.font.quit()
         pygame.display.quit()        
-    
+   
+    def print_game_over(self):
+        """
+        Print the game over string
+        """
+        # Print the game over text
+        string = "Game Over"
+        size_x,size_y = self.myfont.size(string)
+        txt_surf = self.myfont.render(string,False,(255,255,255))
+        self.screen.blit(txt_surf,(self.resx/2-size_x/2,self.resy/2))
+
+        string = "Press q to continue"
+        nsize_x,nsize_y = self.myfont.size(string)
+        txt_surf = self.myfont.render(string,False,(255,255,255))
+        self.screen.blit(txt_surf,(self.resx/2-nsize_x/2,self.resy/2+5+size_y))
+        pygame.display.flip()
+
+        # Wait untill the space is pressed
+        while True: 
+            for ev in pygame.event.get():
+                if ev.type == pygame.QUIT or (ev.type == pygame.KEYDOWN and ev.unicode == 'q'):
+                    return
+
     def block_colides(self):
         """
         Check if the block colides with any other block
@@ -115,7 +144,6 @@ class Tetris(object):
             if(blk.check_collision(self.active_block.shape)):
                 return True
         return False
-        
 
     def game_logic(self):
         """
@@ -141,7 +169,12 @@ class Tetris(object):
         self.active_block.move(0,constants.BHEIGHT)
         can_move_down = not self.block_colides()  
         self.active_block.restore()
-   
+        
+        # If we are on the respawn and we cannot move --> bang!
+        if not can_move_down and (self.start_x == self.active_block.x and self.start_y == self.active_block.y):
+            self.game_over = True
+        
+        # Detect if can insert new block 
         if down_board or not can_move_down:
             self.new_block = True
 

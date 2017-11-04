@@ -41,3 +41,6 @@ CYAN     = (0,255,255)
 # Timing constraints
 MOVE_TICK          = 1000
 TIMER_MOVE_EVENT   = USEREVENT+1
+
+# Font configuration
+FONT_SIZE  = 40
