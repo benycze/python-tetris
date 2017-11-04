@@ -25,7 +25,6 @@ The following list contains used control keys:
 
 ## TODO 
 
-* Counting of score
 * Speed-up the game when the score is rising
 
 ## License
