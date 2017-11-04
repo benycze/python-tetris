@@ -1,6 +1,6 @@
 # Python Tetris
 
-This is the repository with non-finished implementation of the tetris. Please, be patient because I am writing in in my free time :-).
+This is the repository with non-finished implementation of the tetris. Please, be patient because I am writing it in my free time :-).
 
 ### Prerequisites
 
