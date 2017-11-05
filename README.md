@@ -10,6 +10,8 @@ The game is based on the pygame library. You can install it using the pip tool.
 pip install pygame
 ```
 
+Provided code is copmatible with both mandatory versions of Python (Python 2 and Python 3).
+
 ## Control
 
 The following list contains used control keys:
@@ -22,10 +24,6 @@ The following list contains used control keys:
 ## Authors
 
 * **Pavel Benáček** - *coding of the game*
-
-## TODO 
-
-* Speed-up the game when the score is rising
 
 ## License
 
