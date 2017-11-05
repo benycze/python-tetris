@@ -54,13 +54,13 @@ class Tetris(object):
         # Blocka data (shapes and colors). The shape is encoded in the list of [X,Y] points. Each point
         # represents the relative position.
         self.block_data = (
-            ([[0,0],[1,0],[2,0],[3,0]],constants.RED),
-            ([[0,0],[0,1],[1,1],[1,2]],constants.GREEN),
-            ([[0,0],[1,0],[2,0],[2,1]],constants.BLUE),
-            ([[0,0],[0,1],[1,0],[1,1]],constants.ORANGE),
-            ([[0,0],[0,1],[1,1],[1,2]],constants.GOLD),
-            ([[0,0],[1,0],[2,0],[1,1]],constants.PURPLE),
-            ([[0,0],[0,1],[1,1],[2,1]],constants.CYAN)
+            ([[0,0],[1,0],[2,0],[3,0]],constants.RED),     # I block 
+            ([[0,0],[1,0],[0,1],[-1,1]],constants.GREEN),  # S block 
+            ([[0,0],[1,0],[2,0],[2,1]],constants.BLUE),    # J block
+            ([[0,0],[0,1],[1,0],[1,1]],constants.ORANGE),  # O block
+            ([[-1,0],[0,0],[0,1],[1,1]],constants.GOLD),   # Z block
+            ([[0,0],[1,0],[2,0],[1,1]],constants.PURPLE),  # T block
+            ([[0,0],[1,0],[2,0],[0,1]],constants.CYAN),    # J block
         )
         # Compute the number of blocks. When the number of blocks is even, we can use it directly but 
         # we have to decrese the number of blocks in line by one when the number is odd (because of the used margin).
