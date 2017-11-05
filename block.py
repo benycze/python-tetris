@@ -28,12 +28,12 @@ import sys
 
 class Block(object):
     """
-    Abstract class for the implementation of the object
+    Class for handling of tetris blocků
     """    
 
     def __init__(self,shape,x,y,screen,color):
         """
-        The x, y defines the left top corner of the building block
+        The x, y defines the left top corner of the building block.
         """
         # The initial shape (convert all to Rects)
         self.shape = []
@@ -75,7 +75,7 @@ class Block(object):
 
     def move(self,x,y):
         """
-        Move all elements of the block in given obsets  
+        Move all elements of the block using the given offset 
         """       
         self.diffx += x
         self.diffy += y  
@@ -83,8 +83,8 @@ class Block(object):
 
     def remove_blocks(self,y):
         """
-        Remove blocks on the Y coordinates. All blocks
-        above are moved one step down.
+        Remove blocks on the Y coordinate. All blocks
+        above the Y are moved one step down. 
         """
         new_shape = []
         for shape_i in range(len(self.shape)):
@@ -101,24 +101,24 @@ class Block(object):
 
     def has_blocks(self):
         """
-        Returns true if some blocks in the shape remains
+        Returns true if some blocks in the shape remains.
         """    
         return True if len(self.shape) > 0 else False
 
     def rotate(self):
         """
-        Setup the rotation value to 90 degrees
+        Setup the rotation value to 90 degrees.
         """
         self.diff_rotation = 90
         self._update()
 
     def _update(self):
         """
-        Update the position of boxes
+        Update the position of all shape boxes.
         """
         self.max_y = -1
         for bl in self.shape:
-            # Compute get old indexes and compute the new x,y indicies
+            # Get old indexes and compute the new x,y indicies
             origX = (bl.x - self.x)/constants.BWIDTH
             origY = (bl.y - self.y)/constants.BHEIGHT
             rx,ry = self.get_rotated(origX,origY)
@@ -129,7 +129,8 @@ class Block(object):
             newPosY = newY - bl.y
             bl.move_ip(newPosX,newPosY)
             self.max_y = max(self.max_y,newY)
-        # Everyhting was moved, disable, remember new x,y
+        # Everyhting was moved. Get new x,y, disable the move
+        # variables.
         self.x += self.diffx
         self.y += self.diffy
         # Reset control variables
@@ -139,7 +140,7 @@ class Block(object):
 
     def backup(self):
         """
-        Backup the current configuration of blocks
+        Backup the current configuration of shape blocks.
         """
         self.shape_copy = copy.deepcopy(self.shape)
         self.x_copy = self.x
@@ -148,7 +149,7 @@ class Block(object):
 
     def restore(self):
         """
-        Restore the previous configuraiton
+        Restore the previous configuraiton.
         """
         self.shape = self.shape_copy
         self.x = self.x_copy
@@ -169,8 +170,7 @@ class Block(object):
 
     def get_max_blocks(self):
         """
-        Return the blocks which has maximal Y coordinate (for detection
-        of lower colisions)
+        Return all blocks which have maximal Y coordinate.
         """ 
         return [blk for blk in self.shape if blk.y == self.max_y]
 
