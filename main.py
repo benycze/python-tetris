@@ -213,7 +213,7 @@ class Tetris(object):
         # If we are on the respawn and we cannot move --> bang!
         if not can_move_down and (self.start_x == self.active_block.x and self.start_y == self.active_block.y):
             self.game_over = True
-        # Detect if can insert new block 
+        # Detect if we can insert new block 
         if down_board or not can_move_down:     
             # Request new block
             self.new_block = True
@@ -226,8 +226,8 @@ class Tetris(object):
         move with remaining bulding blocks.
         """
         # Get each block of the non-moving tetris block and try
-        # to detect the filled line. The number of bulding blocks is detected during
-        # the init function.
+        # to detect the filled line. The number of bulding blocks is passed to the class
+        # in the init function.
         for shape_block in self.active_block.shape:
             tmp_y = shape_block.y
             tmp_cnt = self.get_blocks_in_line(tmp_y)
