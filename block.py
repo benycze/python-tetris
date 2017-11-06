@@ -20,7 +20,6 @@
 import pdb
 
 import constants
-import block
 import pygame
 import math
 import copy
