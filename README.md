@@ -10,7 +10,7 @@ The game is based on the pygame library. You can install it using the pip tool.
 pip install pygame
 ```
 
-Provided code is copmatible with both mandatory versions of Python (Python 2 and Python 3).
+Provided code is written for Python3.
 
 ## Control
 
