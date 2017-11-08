@@ -7,7 +7,7 @@ This is the repository with non-finished implementation of the tetris. Please, b
 The game is based on the pygame library. You can install it using the pip tool.
 
 ```
-pip install pygame
+pip3 install --user pygame
 ```
 
 Provided code is written for Python3.
