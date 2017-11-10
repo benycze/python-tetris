@@ -30,7 +30,7 @@ class Block(object):
     Class for handling of tetris block
     """    
 
-    def __init__(self,shape,x,y,screen,color):
+    def __init__(self,shape,x,y,screen,color,rotate_en):
         """
         Initialize the tetris block class
 
@@ -41,6 +41,7 @@ class Block(object):
             - y - Y coordinate of first tetris shape block
             - screen  - screen to draw on
             - color - the color of each shape block in RGB notation
+            - rotate_en - enable or disable the rotation
         """
         # The initial shape (convert all to Rect objects)
         self.shape = []
@@ -49,6 +50,8 @@ class Block(object):
             by = sh[1]*constants.BHEIGHT + y
             block = pygame.Rect(bx,by,constants.BWIDTH,constants.BHEIGHT)
             self.shape.append(block)     
+        # Setup the rotation attribute
+        self.rotate_en = rotate_en
         # Setup the rest of variables
         self.x = x
         self.y = y
@@ -134,8 +137,10 @@ class Block(object):
         Setup the rotation value to 90 degrees.
         """
         # Setup the rotation and update coordinates of all shape blocks.
-        self.diff_rotation = 90
-        self._update()
+        # The block is rotated iff the rotation is enabled
+        if self.rotate_en:
+            self.diff_rotation = 90
+            self._update()
 
     def _update(self):
         """

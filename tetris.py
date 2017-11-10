@@ -52,15 +52,16 @@ class Tetris(object):
         self.start_x = math.ceil(self.resx/2.0)
         self.start_y = constants.BOARD_UP_MARGIN + constants.BOARD_HEIGHT + constants.BOARD_MARGIN
         # Blocka data (shapes and colors). The shape is encoded in the list of [X,Y] points. Each point
-        # represents the relative position.
+        # represents the relative position. The true/false value is used for the configuration of rotation where
+        # False means no rotate and True allows the rotation.
         self.block_data = (
-            ([[0,0],[1,0],[2,0],[3,0]],constants.RED),     # I block 
-            ([[0,0],[1,0],[0,1],[-1,1]],constants.GREEN),  # S block 
-            ([[0,0],[1,0],[2,0],[2,1]],constants.BLUE),    # J block
-            ([[0,0],[0,1],[1,0],[1,1]],constants.ORANGE),  # O block
-            ([[-1,0],[0,0],[0,1],[1,1]],constants.GOLD),   # Z block
-            ([[0,0],[1,0],[2,0],[1,1]],constants.PURPLE),  # T block
-            ([[0,0],[1,0],[2,0],[0,1]],constants.CYAN),    # J block
+            ([[0,0],[1,0],[2,0],[3,0]],constants.RED,True),     # I block 
+            ([[0,0],[1,0],[0,1],[-1,1]],constants.GREEN,True),  # S block 
+            ([[0,0],[1,0],[2,0],[2,1]],constants.BLUE,True),    # J block
+            ([[0,0],[0,1],[1,0],[1,1]],constants.ORANGE,False), # O block
+            ([[-1,0],[0,0],[0,1],[1,1]],constants.GOLD,True),   # Z block
+            ([[0,0],[1,0],[2,0],[1,1]],constants.PURPLE,True),  # T block
+            ([[0,0],[1,0],[2,0],[0,1]],constants.CYAN,True),    # J block
         )
         # Compute the number of blocks. When the number of blocks is even, we can use it directly but 
         # we have to decrese the number of blocks in line by one when the number is odd (because of the used margin).
@@ -303,7 +304,7 @@ class Tetris(object):
             # Get the block and add it into the block list(static for now)
             tmp = random.randint(0,len(self.block_data)-1)
             data = self.block_data[tmp]
-            self.active_block = block.Block(data[0],self.start_x,self.start_y,self.screen,data[1])
+            self.active_block = block.Block(data[0],self.start_x,self.start_y,self.screen,data[1],data[2])
             self.blk_list.append(self.active_block)
             self.new_block = False
 
