@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# File: main.py 
+# File: tetris.py 
 # Description: Main file with tetris game.
 # Author: Pavel Benáček <pavel.benacek@gmail.com>
 
