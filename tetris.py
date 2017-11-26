@@ -69,6 +69,10 @@ class Tetris(object):
         self.blocks_in_pile = by
         # Score settings
         self.score = 0
+        # Remember the current speed 
+        self.speed = 1
+        # The score level threshold
+        self.score_level = constants.SCORE_LEVEL
 
     def apply_action(self):
         """
@@ -109,7 +113,16 @@ class Tetris(object):
             for ev in pygame.event.get():
                 if ev.type == pygame.KEYDOWN and ev.key == pygame.K_p:
                     return
-        
+       
+    def set_move_timer(self):
+        """
+        Setup the move timer to the 
+        """
+        # Setup the time to fire the move event. Minimal allowed value is 1
+        speed = math.floor(constants.MOVE_TICK / self.speed)
+        speed = max(1,speed)
+        pygame.time.set_timer(constants.TIMER_MOVE_EVENT,speed)
+ 
     def run(self):
         # Initialize the game (pygame, fonts)
         pygame.init()
@@ -118,7 +131,7 @@ class Tetris(object):
         self.screen = pygame.display.set_mode((self.resx,self.resy))
         pygame.display.set_caption("Tetris")
         # Setup the time to fire the move event every given time
-        pygame.time.set_timer(constants.TIMER_MOVE_EVENT,constants.MOVE_TICK)
+        self.set_move_timer()
         # Control variables for the game. The done signal is used 
         # to control the main loop (it is set by the quit action), the game_over signal
         # is set by the game logic and it is also used for the detection of "game over" drawing.
@@ -127,7 +140,7 @@ class Tetris(object):
         self.game_over = False
         self.new_block = True
         # Print the initial score
-        self.print_score()
+        self.print_status_line()
         while not(self.done) and not(self.game_over):
             # Get the block and run the game logic
             self.get_block()
@@ -140,11 +153,11 @@ class Tetris(object):
         pygame.font.quit()
         pygame.display.quit()        
    
-    def print_score(self):
+    def print_status_line(self):
         """
-        Print the current score.
+        Print the current state line
         """
-        string = ["SCORE: {0}".format(self.score)]
+        string = ["SCORE: {0}   SPEED: {1}x".format(self.score,self.speed)]
         self.print_text(string,constants.POINT_MARGIN,constants.POINT_MARGIN)        
 
     def print_game_over(self):
@@ -255,6 +268,12 @@ class Tetris(object):
             self.remove_line(tmp_y)
             # Update the score.
             self.score += self.blocks_in_line * constants.POINT_VALUE 
+            # Check if we need to speed up the game. If yes, change control variables
+            if self.score > self.score_level:
+                self.score_level *= constants.SCORE_LEVEL_RATIO
+                self.speed       *= constants.GAME_SPEEDUP_RATIO
+                # Change the game speed
+                self.set_move_timer()
 
     def remove_line(self,y):
         """
@@ -294,7 +313,7 @@ class Tetris(object):
         pygame.draw.rect(self.screen,constants.WHITE,self.board_left)
         pygame.draw.rect(self.screen,constants.WHITE,self.board_right)
         # Update the score         
-        self.print_score()
+        self.print_status_line()
 
     def get_block(self):
         """

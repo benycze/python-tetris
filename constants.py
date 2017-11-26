@@ -52,6 +52,12 @@ BLACK    = (0,0,0)
 MOVE_TICK          = 1000
 # Allocated number for the move dowon event
 TIMER_MOVE_EVENT   = USEREVENT+1
+# Speed up ratio of the game (integer values)
+GAME_SPEEDUP_RATIO = 1.5
+# Score LEVEL - first threshold of the score
+SCORE_LEVEL        = 2000
+# Score level ratio
+SCORE_LEVEL_RATIO  = 2 
 
 # Configuration of score
 # Number of points for one building block
