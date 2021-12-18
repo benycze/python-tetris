@@ -84,7 +84,8 @@ class Tetris(object):
             # Check if the close button was fired.
             if ev.type == pygame.QUIT or (ev.type == pygame.KEYDOWN and ev.unicode == 'q'):
                 self.done = True
-            # Detect the key evevents for game control.
+            
+            # Detect the key events for game control.
             if ev.type == pygame.KEYDOWN:
                 if ev.key == pygame.K_DOWN:
                     self.active_block.move(0,constants.BHEIGHT)
