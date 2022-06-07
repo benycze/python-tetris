@@ -85,17 +85,17 @@ class Tetris(object):
             if ev.type == pygame.QUIT or (ev.type == pygame.KEYDOWN and ev.unicode == 'q'):
                 self.done = True
             # Detect the key evevents for game control.
-            if ev.type == pygame.KEYDOWN:
-                if ev.key == pygame.K_DOWN:
-                    self.active_block.move(0,constants.BHEIGHT)
-                if ev.key == pygame.K_LEFT:
-                    self.active_block.move(-constants.BWIDTH,0)
-                if ev.key == pygame.K_RIGHT:
-                    self.active_block.move(constants.BWIDTH,0)
-                if ev.key == pygame.K_SPACE:
-                    self.active_block.rotate()
-                if ev.key == pygame.K_p:
-                    self.pause()
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_DOWN]:
+                self.active_block.move(0,constants.BHEIGHT)
+            if keys[pygame.K_LEFT]:
+                self.active_block.move(-constants.BWIDTH,0)
+            if keys[pygame.K_RIGHT]:
+                self.active_block.move(constants.BWIDTH,0)
+            if keys[pygame.K_SPACE]:
+                self.active_block.rotate()
+            if keys[pygame.K_p]:
+                self.pause()
        
             # Detect if the movement event was fired by the timer.
             if ev.type == constants.TIMER_MOVE_EVENT:
