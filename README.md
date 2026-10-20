@@ -2,6 +2,10 @@
 
 This is the repository with non-finished implementation of the tetris. Please, be patient because I am writing it in my free time :-).
 
+## Screenshot
+
+![Python Tetris Gameplay](screenshot.png)
+
 ### Prerequisites
 
 The game is based on the pygame library. You can install it using the pip tool.
