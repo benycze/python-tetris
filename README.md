@@ -17,14 +17,23 @@ python3 tetris.py
 ```
 
 
-## Control
+## Controls
 
-The following list contains used control keys:
+The following list contains the control keys:
 
-* *Arrows* - used for the moving of a tetris block
-* *Space*  - rotates the tetris block
-* *q*      - quit the game
-* *p*      - pause the game
+* *Left / Right Arrows* - move the active block horizontally
+* *Down Arrow* - move the active block down (soft drop)
+* *Up Arrow / Space* - rotate the active block
+* *p* - pause / continue the game
+* *q* - quit the game
+
+## Running Tests
+
+To run the unit tests:
+
+```bash
+pytest
+```
 
 ## Authors
 
@@ -32,4 +41,5 @@ The following list contains used control keys:
 
 ## License
 
-This project is licensed under the GNU GPL License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNU GPL License - see the [LICENSE.md](LICENSE.md) file for details.
+
