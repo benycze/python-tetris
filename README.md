@@ -26,7 +26,7 @@ python3 tetris.py
 The following list contains the control keys:
 
 * *Left / Right Arrows* - move the active block horizontally
-* *Down Arrow* - move the active block down (soft drop)
+* *Down Arrow* - instantly drop the active block to the lowest available position (hard drop)
 * *Up Arrow / Space* - rotate the active block
 * *p* - pause / continue the game
 * *q* - quit the game

@@ -265,3 +265,28 @@ def test_tetris_speedup_on_score(dummy_screen):
 
     assert game.speed > initial_speed
     assert game.score_level > initial_threshold
+
+
+def test_tetris_hard_drop(dummy_screen):
+    """Test that hard drop instantly lands and locks the active block."""
+    game = Tetris(16, 30)
+    game.screen = dummy_screen
+    game.get_block()
+
+    first_block = game.active_block
+    starting_y = first_block.y
+
+    game.hard_drop()
+
+    # The block should have moved downward.
+    assert first_block.y > starting_y
+
+    # The block should be locked at the lowest valid position.
+    assert game.try_move(0, constants.BHEIGHT) is False
+
+    # The game should be ready to generate the next block.
+    assert game.new_block is True
+    assert first_block in game.blk_list
+
+    game.get_block()
+    assert game.active_block is not first_block
