@@ -157,6 +157,14 @@ class Tetris:
             self.detect_line()
             self.new_block = True
 
+    
+    def hard_drop(self):
+        """Drop the active block to the lowest valid position and lock it."""
+        while self.try_move(0, constants.BHEIGHT):
+            pass
+        # Reuse normal locking, line clearing, and game-over behavior.
+        self.step_down()
+
     def apply_action(self):
         """
         Get events from the event queue and run appropriate actions.
@@ -172,7 +180,8 @@ class Tetris:
             # Detect key events for game control.
             if ev.type == pygame.KEYDOWN:
                 if ev.key == pygame.K_DOWN:
-                    self.step_down()
+                    self.hard_drop()
+                    return  # Wait for the next block before processing more input.
                 elif ev.key == pygame.K_LEFT:
                     self.try_move(-constants.BWIDTH, 0)
                 elif ev.key == pygame.K_RIGHT:
